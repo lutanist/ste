@@ -1,0 +1,72 @@
+{{template "partials/header" .}}
+
+<h1>{{.Title}}</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h2>Use a local account to log in.</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label for="Input.Email">Email</label>
+                    <input id="Input.Email" class="form-control" autocomplete="username" required="true" />
+                    <span for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Input.Password">Password</label>
+                    <input id="Input.Password" class="form-control" autocomplete="current-password" required="true" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="Input.RememberMe">Remember Me
+                            <input id="Input.RememberMe" type="checkbox" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="login-submit" type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" herf="account/ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a href="https://127.0.0.1/account/register?returnUrl={{.ReturnUrl}}">Register as a new user</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" herf="account/ResendEmailConfirmation">Resend email confirmation</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr />
+            {{ if and (.ExternalLogins) (gt (len .ExternalLogins) 0) }}
+            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="{{.ReturnUrl}}" method="post" class="form-horizontal">
+                <div>
+                    <p>
+                        {{ range $provider := .ExternalLogins }}
+                            <button type="submit" class="btn btn-primary" name="provider" value="{{$provider.Name}}" title="Log in using your {{$provider.DisplayName}} account">{{$provider.DisplayName}}</button>
+                        {{ end }}
+                    </p>
+                </div>
+            </form>
+            {{ else }}
+            <div>
+                <p>
+                    There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                    about setting up this ASP.NET application to support logging in via external services</a>.
+                </p>
+            </div>  
+            {{ end }}
+        </section>
+    </div>
+</div>
+
+{{template "partials/footer" .}}
