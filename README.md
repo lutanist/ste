@@ -35,6 +35,10 @@ https://github.com/hyperledger/fabric
 - [위에거 text 링킁](https://divrhino.com/articles/full-stack-go-fiber-with-docker-postgres/)
 - [fiber-go-template](https://github.com/create-go-app/fiber-go-template)
 
+### wire
+
+https://www.shipyardapp.com/blog/go-dependency-injection-wire/
+
 https 개발환경
 
 ```winget install FiloSottile.mkcert```

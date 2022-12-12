@@ -1,8 +1,20 @@
 package handlers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
 
-type Handler struct{}
+	"github.com/lutanist/ste/backend/identity/core"
+)
+
+type Handler struct {
+	sm *core.SignInManager
+}
+
+func NewHandler(sm *core.SignInManager) *Handler {
+	return &Handler{
+		sm: sm,
+	}
+}
 
 func (h *Handler) Register(r *fiber.App) {
 	ah := r.Group("/account")
@@ -14,9 +26,13 @@ func (h *Handler) Register(r *fiber.App) {
 	})
 
 	ah.Get("login", func(c *fiber.Ctx) error {
+		returnUrl := c.Query("returnUrl", "~/")
+
 		return c.Render("login", fiber.Map{
+			"ExternalLogins": h.sm.GetExternalAuthenticationSchemes(),
+
 			"Title":     "Hello, World!",
-			"ReturnUrl": "",
+			"ReturnUrl": returnUrl,
 		}, "layouts/main")
 	})
 }
