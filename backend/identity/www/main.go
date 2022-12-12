@@ -26,6 +26,8 @@ func main() {
 	app.Use(logger.New())
 	app.Use(recover.New())
 
+	// TODO: initialize sign in manager
+
 	h := handlers.Handler{}
 	h.Register(app)
 
