@@ -271,3 +271,33 @@ sequenceDiagram
     AuthenticationServiceCollectionExtensions ->> IServiceCollection: TryAddSingleton<ISystemClock, SystemClock>()
     AuthenticationServiceCollectionExtensions --) app: AuthenticationBuilder
 ```
+
+### AuthenticationMiddleware Invoke
+```mermaid
+sequenceDiagram
+    app ->>+ AuthenticationMiddleware: Invoke(HttpContext context)
+    activate AuthenticationMiddleware
+    AuthenticationMiddleware ->> context: RequestServices
+    AuthenticationMiddleware ->>+ IServiceProvider: GetRequiredService<IAuthenticationHandlerProvider>()
+    IServiceProvider-->>-AuthenticationMiddleware: handlers
+    loop every schemas
+        AuthenticationMiddleware ->>+ handlers: GetHandlerAsync(context, schema.Name)
+        handlers -->>-AuthenticationMiddleware: handler
+        AuthenticationMiddleware-->>handler: HandleRequestAsync()
+        alt handler is null or not ok
+            AuthenticationMiddleware-->>app: return
+        end
+    end
+    AuthenticationMiddleware ->>+ IAuthenticationSchemeProvider: GetDefaultAuthenticateSchemeAsync()
+    IAuthenticationSchemeProvider -->>- AuthenticationMiddleware: defaultAuthenticate
+    AuthenticationMiddleware -->>+ context: AuthenticateAsync(defaultAuthenticate.Name)
+    context ->>- AuthenticationMiddleware: result
+    alt result?.Principal != null
+        AuthenticationMiddleware ->> context: SetUser(result.Printcipal)
+    end
+    alt result?.Succeeded ?? false
+        AuthenticationMiddleware ->> context: Features.Set<IHttpAuthenticationFeature>(authFeatures)
+        AuthenticationMiddleware ->> context: Features.Set<IAuthenticateResultFeature>(authFeatures)
+    end
+    deactivate AuthenticationMiddleware
+```
