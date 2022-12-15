@@ -40,13 +40,18 @@ func (h *Handler) Register(r *fiber.App) {
 			Username: input.Email,
 		}
 
-		result, err := h.um.Create(&newUser, input.Password)
+		result, err := h.um.CreateWithPassword(c.Context(), &newUser, input.Password)
 		if err != nil {
 			return err
 		}
 
 		if result.Succeeded {
-
+			// 여기서 계정확인 방법, sms, email 등으로 code를 보내고 confirm page를 띄어 입력을 기다린다
+			// send email confirm message
+			// if need requireConfirmAccount
+			//    redirect to account confirm page
+			// else
+			//    signin
 		}
 
 		return c.Render("signup", fiber.Map{

@@ -32,9 +32,43 @@ func (uc *UserCreate) SetUsername(s string) *UserCreate {
 	return uc
 }
 
+// SetEmail sets the "email" field.
+func (uc *UserCreate) SetEmail(s string) *UserCreate {
+	uc.mutation.SetEmail(s)
+	return uc
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (uc *UserCreate) SetPasswordHash(s string) *UserCreate {
 	uc.mutation.SetPasswordHash(s)
+	return uc
+}
+
+// SetNillablePasswordHash sets the "password_hash" field if the given value is not nil.
+func (uc *UserCreate) SetNillablePasswordHash(s *string) *UserCreate {
+	if s != nil {
+		uc.SetPasswordHash(*s)
+	}
+	return uc
+}
+
+// SetSecurityStamp sets the "security_stamp" field.
+func (uc *UserCreate) SetSecurityStamp(s string) *UserCreate {
+	uc.mutation.SetSecurityStamp(s)
+	return uc
+}
+
+// SetNillableSecurityStamp sets the "security_stamp" field if the given value is not nil.
+func (uc *UserCreate) SetNillableSecurityStamp(s *string) *UserCreate {
+	if s != nil {
+		uc.SetSecurityStamp(*s)
+	}
+	return uc
+}
+
+// SetLockoutEnabled sets the "lockout_enabled" field.
+func (uc *UserCreate) SetLockoutEnabled(b bool) *UserCreate {
+	uc.mutation.SetLockoutEnabled(b)
 	return uc
 }
 
@@ -143,8 +177,11 @@ func (uc *UserCreate) check() error {
 	if _, ok := uc.mutation.Username(); !ok {
 		return &ValidationError{Name: "username", err: errors.New(`ent: missing required field "User.username"`)}
 	}
-	if _, ok := uc.mutation.PasswordHash(); !ok {
-		return &ValidationError{Name: "password_hash", err: errors.New(`ent: missing required field "User.password_hash"`)}
+	if _, ok := uc.mutation.Email(); !ok {
+		return &ValidationError{Name: "email", err: errors.New(`ent: missing required field "User.email"`)}
+	}
+	if _, ok := uc.mutation.LockoutEnabled(); !ok {
+		return &ValidationError{Name: "lockout_enabled", err: errors.New(`ent: missing required field "User.lockout_enabled"`)}
 	}
 	if _, ok := uc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "User.created_at"`)}
@@ -184,9 +221,21 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldUsername, field.TypeString, value)
 		_node.Username = value
 	}
+	if value, ok := uc.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
 	if value, ok := uc.mutation.PasswordHash(); ok {
 		_spec.SetField(user.FieldPasswordHash, field.TypeString, value)
-		_node.PasswordHash = value
+		_node.PasswordHash = &value
+	}
+	if value, ok := uc.mutation.SecurityStamp(); ok {
+		_spec.SetField(user.FieldSecurityStamp, field.TypeString, value)
+		_node.SecurityStamp = &value
+	}
+	if value, ok := uc.mutation.LockoutEnabled(); ok {
+		_spec.SetField(user.FieldLockoutEnabled, field.TypeBool, value)
+		_node.LockoutEnabled = value
 	}
 	if value, ok := uc.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)

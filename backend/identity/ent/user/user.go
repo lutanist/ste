@@ -15,8 +15,14 @@ const (
 	FieldName = "name"
 	// FieldUsername holds the string denoting the username field in the database.
 	FieldUsername = "username"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
 	// FieldPasswordHash holds the string denoting the password_hash field in the database.
 	FieldPasswordHash = "password_hash"
+	// FieldSecurityStamp holds the string denoting the security_stamp field in the database.
+	FieldSecurityStamp = "security_stamp"
+	// FieldLockoutEnabled holds the string denoting the lockout_enabled field in the database.
+	FieldLockoutEnabled = "lockout_enabled"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// Table holds the table name of the user in the database.
@@ -28,7 +34,10 @@ var Columns = []string{
 	FieldID,
 	FieldName,
 	FieldUsername,
+	FieldEmail,
 	FieldPasswordHash,
+	FieldSecurityStamp,
+	FieldLockoutEnabled,
 	FieldCreatedAt,
 }
 

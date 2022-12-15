@@ -20,8 +20,14 @@ type User struct {
 	Name string `json:"name,omitempty"`
 	// Username holds the value of the "username" field.
 	Username string `json:"username,omitempty"`
+	// Email holds the value of the "email" field.
+	Email string `json:"email,omitempty"`
 	// PasswordHash holds the value of the "password_hash" field.
-	PasswordHash string `json:"password_hash,omitempty"`
+	PasswordHash *string `json:"password_hash,omitempty"`
+	// SecurityStamp holds the value of the "security_stamp" field.
+	SecurityStamp *string `json:"security_stamp,omitempty"`
+	// LockoutEnabled holds the value of the "lockout_enabled" field.
+	LockoutEnabled bool `json:"lockout_enabled,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
@@ -31,9 +37,11 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case user.FieldLockoutEnabled:
+			values[i] = new(sql.NullBool)
 		case user.FieldID:
 			values[i] = new(sql.NullInt64)
-		case user.FieldName, user.FieldUsername, user.FieldPasswordHash:
+		case user.FieldName, user.FieldUsername, user.FieldEmail, user.FieldPasswordHash, user.FieldSecurityStamp:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt:
 			values[i] = new(sql.NullTime)
@@ -70,11 +78,31 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.Username = value.String
 			}
+		case user.FieldEmail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field email", values[i])
+			} else if value.Valid {
+				u.Email = value.String
+			}
 		case user.FieldPasswordHash:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field password_hash", values[i])
 			} else if value.Valid {
-				u.PasswordHash = value.String
+				u.PasswordHash = new(string)
+				*u.PasswordHash = value.String
+			}
+		case user.FieldSecurityStamp:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field security_stamp", values[i])
+			} else if value.Valid {
+				u.SecurityStamp = new(string)
+				*u.SecurityStamp = value.String
+			}
+		case user.FieldLockoutEnabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field lockout_enabled", values[i])
+			} else if value.Valid {
+				u.LockoutEnabled = value.Bool
 			}
 		case user.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -116,8 +144,21 @@ func (u *User) String() string {
 	builder.WriteString("username=")
 	builder.WriteString(u.Username)
 	builder.WriteString(", ")
-	builder.WriteString("password_hash=")
-	builder.WriteString(u.PasswordHash)
+	builder.WriteString("email=")
+	builder.WriteString(u.Email)
+	builder.WriteString(", ")
+	if v := u.PasswordHash; v != nil {
+		builder.WriteString("password_hash=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := u.SecurityStamp; v != nil {
+		builder.WriteString("security_stamp=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("lockout_enabled=")
+	builder.WriteString(fmt.Sprintf("%v", u.LockoutEnabled))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(u.CreatedAt.Format(time.ANSIC))

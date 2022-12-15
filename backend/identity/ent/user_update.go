@@ -40,9 +40,55 @@ func (uu *UserUpdate) SetUsername(s string) *UserUpdate {
 	return uu
 }
 
+// SetEmail sets the "email" field.
+func (uu *UserUpdate) SetEmail(s string) *UserUpdate {
+	uu.mutation.SetEmail(s)
+	return uu
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (uu *UserUpdate) SetPasswordHash(s string) *UserUpdate {
 	uu.mutation.SetPasswordHash(s)
+	return uu
+}
+
+// SetNillablePasswordHash sets the "password_hash" field if the given value is not nil.
+func (uu *UserUpdate) SetNillablePasswordHash(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetPasswordHash(*s)
+	}
+	return uu
+}
+
+// ClearPasswordHash clears the value of the "password_hash" field.
+func (uu *UserUpdate) ClearPasswordHash() *UserUpdate {
+	uu.mutation.ClearPasswordHash()
+	return uu
+}
+
+// SetSecurityStamp sets the "security_stamp" field.
+func (uu *UserUpdate) SetSecurityStamp(s string) *UserUpdate {
+	uu.mutation.SetSecurityStamp(s)
+	return uu
+}
+
+// SetNillableSecurityStamp sets the "security_stamp" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableSecurityStamp(s *string) *UserUpdate {
+	if s != nil {
+		uu.SetSecurityStamp(*s)
+	}
+	return uu
+}
+
+// ClearSecurityStamp clears the value of the "security_stamp" field.
+func (uu *UserUpdate) ClearSecurityStamp() *UserUpdate {
+	uu.mutation.ClearSecurityStamp()
+	return uu
+}
+
+// SetLockoutEnabled sets the "lockout_enabled" field.
+func (uu *UserUpdate) SetLockoutEnabled(b bool) *UserUpdate {
+	uu.mutation.SetLockoutEnabled(b)
 	return uu
 }
 
@@ -143,8 +189,23 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := uu.mutation.Username(); ok {
 		_spec.SetField(user.FieldUsername, field.TypeString, value)
 	}
+	if value, ok := uu.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+	}
 	if value, ok := uu.mutation.PasswordHash(); ok {
 		_spec.SetField(user.FieldPasswordHash, field.TypeString, value)
+	}
+	if uu.mutation.PasswordHashCleared() {
+		_spec.ClearField(user.FieldPasswordHash, field.TypeString)
+	}
+	if value, ok := uu.mutation.SecurityStamp(); ok {
+		_spec.SetField(user.FieldSecurityStamp, field.TypeString, value)
+	}
+	if uu.mutation.SecurityStampCleared() {
+		_spec.ClearField(user.FieldSecurityStamp, field.TypeString)
+	}
+	if value, ok := uu.mutation.LockoutEnabled(); ok {
+		_spec.SetField(user.FieldLockoutEnabled, field.TypeBool, value)
 	}
 	if value, ok := uu.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)
@@ -180,9 +241,55 @@ func (uuo *UserUpdateOne) SetUsername(s string) *UserUpdateOne {
 	return uuo
 }
 
+// SetEmail sets the "email" field.
+func (uuo *UserUpdateOne) SetEmail(s string) *UserUpdateOne {
+	uuo.mutation.SetEmail(s)
+	return uuo
+}
+
 // SetPasswordHash sets the "password_hash" field.
 func (uuo *UserUpdateOne) SetPasswordHash(s string) *UserUpdateOne {
 	uuo.mutation.SetPasswordHash(s)
+	return uuo
+}
+
+// SetNillablePasswordHash sets the "password_hash" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillablePasswordHash(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetPasswordHash(*s)
+	}
+	return uuo
+}
+
+// ClearPasswordHash clears the value of the "password_hash" field.
+func (uuo *UserUpdateOne) ClearPasswordHash() *UserUpdateOne {
+	uuo.mutation.ClearPasswordHash()
+	return uuo
+}
+
+// SetSecurityStamp sets the "security_stamp" field.
+func (uuo *UserUpdateOne) SetSecurityStamp(s string) *UserUpdateOne {
+	uuo.mutation.SetSecurityStamp(s)
+	return uuo
+}
+
+// SetNillableSecurityStamp sets the "security_stamp" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableSecurityStamp(s *string) *UserUpdateOne {
+	if s != nil {
+		uuo.SetSecurityStamp(*s)
+	}
+	return uuo
+}
+
+// ClearSecurityStamp clears the value of the "security_stamp" field.
+func (uuo *UserUpdateOne) ClearSecurityStamp() *UserUpdateOne {
+	uuo.mutation.ClearSecurityStamp()
+	return uuo
+}
+
+// SetLockoutEnabled sets the "lockout_enabled" field.
+func (uuo *UserUpdateOne) SetLockoutEnabled(b bool) *UserUpdateOne {
+	uuo.mutation.SetLockoutEnabled(b)
 	return uuo
 }
 
@@ -313,8 +420,23 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	if value, ok := uuo.mutation.Username(); ok {
 		_spec.SetField(user.FieldUsername, field.TypeString, value)
 	}
+	if value, ok := uuo.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+	}
 	if value, ok := uuo.mutation.PasswordHash(); ok {
 		_spec.SetField(user.FieldPasswordHash, field.TypeString, value)
+	}
+	if uuo.mutation.PasswordHashCleared() {
+		_spec.ClearField(user.FieldPasswordHash, field.TypeString)
+	}
+	if value, ok := uuo.mutation.SecurityStamp(); ok {
+		_spec.SetField(user.FieldSecurityStamp, field.TypeString, value)
+	}
+	if uuo.mutation.SecurityStampCleared() {
+		_spec.ClearField(user.FieldSecurityStamp, field.TypeString)
+	}
+	if value, ok := uuo.mutation.LockoutEnabled(); ok {
+		_spec.SetField(user.FieldLockoutEnabled, field.TypeBool, value)
 	}
 	if value, ok := uuo.mutation.CreatedAt(); ok {
 		_spec.SetField(user.FieldCreatedAt, field.TypeTime, value)

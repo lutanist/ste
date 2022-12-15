@@ -2,7 +2,11 @@ module github.com/lutanist/ste/backend/identity
 
 go 1.19
 
-require github.com/gofiber/fiber/v2 v2.40.1
+require (
+	github.com/gofiber/fiber/v2 v2.40.1
+	github.com/wagslane/go-password-validator v0.3.0
+	golang.org/x/crypto v0.1.0
+)
 
 require (
 	ariga.io/atlas v0.7.3-0.20221011160332-3ca609863edd // indirect
@@ -16,7 +20,7 @@ require (
 	github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7 // indirect
 	github.com/zclconf/go-cty v1.8.0 // indirect
 	golang.org/x/mod v0.6.0 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/text v0.4.0 // indirect
 )
 
 require (

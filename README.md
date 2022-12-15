@@ -41,6 +41,28 @@ https://dev.to/komfysach/go-live-reload-using-air-40ll
 
 https://github.com/gofiber/boilerplate/blob/master/app.go
 
+go generate ./ent
+
+https://entgo.io/blog/2021/10/19/sqlcomment-support-for-ent
+
+```
+services.AddScoped<INotificationService, TextNotificationService>();
+services.AddScoped<INotificationService, EmailNotificationService>();
+
+services.AddScoped<INotificatonStrategy, NotificationStrategy>();
+
+IEnumerable<INotificationService>
+```
+여러 알림 방법 등록
+
+DDD
+https://github.com/isutare412/goarch/tree/main/gateway/pkg/config
+
+https://github.com/dimuska139/go-api-layout/blob/master/internal/config/config.go
+
+https://github.com/dimuska139/go-api-layout
+
+
 ### wire
 
 https://www.shipyardapp.com/blog/go-dependency-injection-wire/

@@ -17,7 +17,10 @@ func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name"),
 		field.String("username").Unique(),
+		field.String("email").Unique(),
 		field.String("password_hash").Optional().Nillable(),
+		field.String("security_stamp").Optional().Nillable(),
+		field.Bool("lockout_enabled"),
 		field.Time("created_at").Default(time.Now),
 	}
 }
