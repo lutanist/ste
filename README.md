@@ -6,6 +6,16 @@ Security Token Exchanger. [부실채권(NPL)](http://koreaifp.com/financial_maga
 
 ## 인증
 
+전화번호 인증
+  - sms
+  - voice call
+본인인증
+consent 약관 동의
+새 로그인 시 알림
+MFA
+MFA 선택 방법
+외부인증은 외분인증 완료 후 externlogin confirmation페이지에서 등록 처리한다.
+
 ### OAuth, OIDC
 [zitadel/oidc github](https://github.com/zitadel/oidc)
 https://developer.okta.com/docs/guides/sign-into-web-app-redirect/go/main/
@@ -23,6 +33,15 @@ https://github.com/hyperledger/fabric
 
 
 ## Backend 구현
+
+```
+go generate ./ent
+wire
+```
+
+
+https://entgo.io/blog/2021/10/19/sqlcomment-support-for-ent
+
 - [golang-standards/project-layout](https://github.com/golang-standards/project-layout)
 - [golang tool dependencies](https://play-with-go.dev/tools-as-dependencies_go119_en/)
 - [ent](https://entgo.io/docs/getting-started/)
@@ -31,19 +50,30 @@ https://github.com/hyperledger/fabric
   - vipder flag 자동으로 되는지 확인
 - [fiber docs](https://docs.gofiber.io/)
   - https://blog.gopheracademy.com/advent-2014/configuration-with-fangs/
-- [golang fiber fullstack example](https://github.com/divrhino/divrhino-trivia-fullstack)
-- [위에거 text 링킁](https://divrhino.com/articles/full-stack-go-fiber-with-docker-postgres/)
-- [fiber-go-template](https://github.com/create-go-app/fiber-go-template)
+  - [golang fiber fullstack example](https://github.com/divrhino/divrhino-trivia-fullstack)
+  - [위에거 text 링킁](https://divrhino.com/articles/full-stack-go-fiber-with-docker-postgres/)
+  - [fiber-go-template](https://github.com/create-go-app/fiber-go-template)
+  - https://dev.to/koddr/go-fiber-by-examples-delving-into-built-in-functions-1p3k#bodyparser
+  - https://github.com/alpody/golang-fiber-realworld-example-app
+  - https://github.com/gofiber/boilerplate/blob/master/app.go
+- https://www.alexedwards.net/blog/form-validation-and-processing
+- https://dev.to/komfysach/go-live-reload-using-air-40ll
 
-https://github.com/alpody/golang-fiber-realworld-example-app
+### go microservice
+- https://github.com/go-kit/kit
+- https://github.com/go-micro/go-micro
+- https://github.com/micro/services
+- https://github.com/google/go-cloud
 
-https://dev.to/komfysach/go-live-reload-using-air-40ll
+### Ory
+- [ory documentation](https://www.ory.sh/docs/welcome)
+- https://github.com/IGLU-Agency/iglu-ory-kratos-example
+- [OAuth 2.0 for Native Apps](https://www.rfc-editor.org/rfc/rfc8252#page-19)
+- [ory - hydra itegration](https://github.com/atreya2011/go-kratos-test/tree/hydra-consent)
 
-https://github.com/gofiber/boilerplate/blob/master/app.go
-
-go generate ./ent
-
-https://entgo.io/blog/2021/10/19/sqlcomment-support-for-ent
+### flutter
+flutter oauth & graphql
+https://medium.com/nexl-engineering/oauth-authentication-in-flutter-app-and-set-up-graphql-with-authentication-token-d2b3f65fee2e
 
 ```
 services.AddScoped<INotificationService, TextNotificationService>();
