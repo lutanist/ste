@@ -8,12 +8,16 @@ Security Token Exchanger. [부실채권(NPL)](http://koreaifp.com/financial_maga
 
 전화번호 인증
   - sms
-  - voice call
-본인인증
-consent 약관 동의
-새 로그인 시 알림
-MFA
-MFA 선택 방법
+  - [aspnet identity concept-authentication-phone-options](https://learn.microsoft.com/en-us/azure/active-directory/authentication/concept-authentication-phone-options)
+  - voice call (ars)
+
+기능 목록
+- 본인인증. 카사는 제일 처음 카카오인증 또는 본인인증으로 가입 절차를 시작한다.
+  - 본인인증 제공 업체 선택 필요
+- consent 약관 동의
+- 새 로그인 시 알림
+- MFA. MFA 선택 방법. 구글, ms 등은 여러가지 방법을 선택할 수 있다.
+
 외부인증은 외분인증 완료 후 externlogin confirmation페이지에서 등록 처리한다.
 
 ### OAuth, OIDC
@@ -60,8 +64,9 @@ https://entgo.io/blog/2021/10/19/sqlcomment-support-for-ent
 - https://dev.to/komfysach/go-live-reload-using-air-40ll
 
 ### go microservice
-- https://github.com/go-kit/kit
 - https://github.com/go-micro/go-micro
+  - https://github.com/go-micro/demo
+- https://github.com/go-kit/kit
 - https://github.com/micro/services
 - https://github.com/google/go-cloud
 
@@ -70,6 +75,9 @@ https://entgo.io/blog/2021/10/19/sqlcomment-support-for-ent
 - https://github.com/IGLU-Agency/iglu-ory-kratos-example
 - [OAuth 2.0 for Native Apps](https://www.rfc-editor.org/rfc/rfc8252#page-19)
 - [ory - hydra itegration](https://github.com/atreya2011/go-kratos-test/tree/hydra-consent)
+
+### 검색
+AWS는 elastic search 대신 [OpenSearch](https://opensearch.org/)를 밀고 있다.
 
 ### flutter
 flutter oauth & graphql
